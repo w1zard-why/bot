@@ -1,0 +1,45 @@
+# pyproject.toml
+[tool.poetry]
+name = "tg-stars-bot"
+version = "0.1.0"
+description = "Telegram bot with stars balance"
+authors = ["You"]
+
+[tool.poetry.dependencies]
+python = "^3.12"
+aiogram = "^3.4"
+asyncpg = "^0.29"
+aiocron = "^1.8"
+python-dotenv = "^1.0"
+pydantic = "^2.8"
+aiohttp = "^3.9"
+aioprometheus = "23.3.0"
+python-json-logger = "^2.0"
+pydantic-settings = "^2.10.1"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.0"
+pytest-asyncio = "^0.23"
+faker = "^24.0"
+black = "^24.4"
+isort = "^5.13"
+flake8 = "^7.0"
+mypy = "^1.10"
+coverage = "^7.5"
+
+[tool.black]
+line-length = 88
+
+[tool.isort]
+profile = "black"
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+
+[build-system]
+requires = ["poetry-core>=1.9"]
+build-backend = "poetry.core.masonry.api"
