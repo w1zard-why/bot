@@ -1,32 +1,25 @@
-# bot/app/config.py
-from functools import lru_cache
-from typing import Literal
-
-from pydantic_settings import BaseSettings          # <-- новая
-from pydantic import Field, PostgresDsn             # остальное без изменений
-
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 class Settings(BaseSettings):
     BOT_TOKEN: str
-    PG_DSN: PostgresDsn
-    GIFT_API_BASE: str = "https://gift.example.com"
-    PAYMENT_PROVIDER_TOKEN: str | None = None
-    ADMINS: str = ""
-    TG_MODE: Literal["webhook", "polling"] = "polling"
-    WEBHOOK_BASE: str | None = None
-
-    INITIAL_STARS: int = 5
-    AUTOBUY_INTERVAL: int = 15  # minutes
-
+    PG_DSN: str
+    TG_MODE: str = "polling"
+    GIFT_API_BASE: str
+    PAYMENT_PROVIDER_TOKEN: str = ""
+    INITIAL_STARS: int = 0
+    RATE_LIMIT_WINDOW: int = 60
     RATE_LIMIT_CMDS: int = 5
-    RATE_LIMIT_WINDOW: int = 10  # seconds
 
-    class Config:
-        env_file = ".env"
-        env_file_encoding = "utf-8"
+    TG_API_ID: int
+    TG_API_HASH: str
+    TG_PHONE: str
+    TG_SESSION: str
 
+    model_config = SettingsConfigDict(
+        env_file=".env",
+        case_sensitive=False,
+        extra="ignore"
+    )
 
-@lru_cache()
-def get_settings() -> Settings:  # noqa: D401
-    """Return cached settings instance."""
+def get_settings() -> Settings:
     return Settings()

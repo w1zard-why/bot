@@ -2,9 +2,10 @@
 from aiogram import Router
 from aiogram.filters import Command
 from aiogram.types import Message
-
+from aiogram import types               
 from app.config import get_settings
 from app.db import queries
+from app.services.user_service import UserService
 
 router = Router()
 settings = get_settings()
@@ -48,3 +49,10 @@ async def cmd_gift_list(msg: Message) -> None:
             f"{r['gift_id']} qty={r['target_qty']} price={r['max_price']}" for r in rows
         ]
         await msg.answer("\n".join(lines))
+
+@router.message(Command("give_stars"))
+async def give(msg: types.Message):
+    # /give_stars <uid> <кол-во>
+    _, uid, amount = msg.text.split()
+    await UserService.add_stars(int(uid), int(amount))
+    await msg.answer(f"✅ Начислил {amount} ⭐ юзеру {uid}")

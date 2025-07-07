@@ -17,7 +17,7 @@ store = GiftStoreAPI()
 def start_autobuyer(bot: Bot) -> None:
     """Запустить крон-таску, вызываемую в main.py."""
 
-    @aiocron.crontab("*/1 * * * *")  # каждую минуту — внутри фильтруем по INTERVAL
+    #@aiocron.crontab("*/1 * * * *")  # каждую минуту — внутри фильтруем по INTERVAL
     async def _task() -> None:  # noqa: WPS430
         try:
             await _run(bot)
